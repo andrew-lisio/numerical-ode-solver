@@ -4,40 +4,39 @@ import math
 
 def logistic_derivative(y, r, K):
     """
-    Computes the derivative dy/dt for the logistic growth equation.
+    Compute dy/dt for the logistic growth equation.
 
     dy/dt = r * y * (1 - y / K)
 
     Parameters:
-        y: current population/value
-        r: growth rate
-        K: carrying capacity
+        y (float): Current population or quantity.
+        r (float): Growth rate.
+        K (float): Carrying capacity.
 
     Returns:
-        The rate of change at the current value of y.
+        float: Rate of change at the current value of y.
     """
     return r * y * (1 - y / K)
 
 
 def euler_method(y0, r, K, t_start, t_end, step_size):
     """
-    Approximates the solution to the logistic growth equation using Euler's method.
+    Approximate the logistic growth equation using Euler's method.
 
-    Euler's method formula:
+    Euler's method estimates the next value using:
+
         next_y = current_y + step_size * derivative
 
     Parameters:
-        y0: initial population/value
-        r: growth rate
-        K: carrying capacity
-        t_start: starting time
-        t_end: ending time
-        step_size: size of each time step
+        y0 (float): Initial population or quantity.
+        r (float): Growth rate.
+        K (float): Carrying capacity.
+        t_start (float): Starting time.
+        t_end (float): Ending time.
+        step_size (float): Size of each step forward in time.
 
     Returns:
-        Two lists:
-            times: the time values
-            values: the approximate y values
+        tuple: A list of time values and a list of approximate y values.
     """
     times = []
     values = []
@@ -58,31 +57,44 @@ def euler_method(y0, r, K, t_start, t_end, step_size):
 
 def exact_solution(t, y0, r, K):
     """
-    Computes the exact solution of the logistic growth equation.
+    Compute the exact solution of the logistic growth equation.
 
-    Formula:
-        y(t) = K / (1 + ((K - y0) / y0) * e^(-r t))
+    The exact solution is used to compare against Euler's numerical approximation.
+
+    Parameters:
+        t (float): Time value.
+        y0 (float): Initial population or quantity.
+        r (float): Growth rate.
+        K (float): Carrying capacity.
+
+    Returns:
+        float: Exact solution value at time t.
     """
     return K / (1 + ((K - y0) / y0) * math.exp(-r * t))
 
 
 def main():
+    """
+    Run the logistic growth simulation and generate a comparison plot.
+    """
+
     # Model parameters
-    y0 = 10       # initial population/value
-    r = 0.5       # growth rate
-    K = 100       # carrying capacity
+    y0 = 10
+    r = 0.5
+    K = 100
     t_start = 0
     t_end = 20
     step_size = 0.5
 
-    # Euler approximation
+    # Approximate the solution using Euler's method
     times, euler_values = euler_method(y0, r, K, t_start, t_end, step_size)
 
-    # Exact solution values at the same time points
+    # Compute the exact solution at the same time points
     exact_values = [exact_solution(t, y0, r, K) for t in times]
 
-    # Plot both solutions
-    plt.plot(times, euler_values, label="Euler Approximation")
+    # Create and save the plot
+    plt.figure(figsize=(9, 6))
+    plt.plot(times, euler_values, marker="o", label="Euler Approximation")
     plt.plot(times, exact_values, label="Exact Solution")
 
     plt.xlabel("Time")
@@ -91,7 +103,7 @@ def main():
     plt.legend()
     plt.grid(True)
 
-    plt.savefig("logistic_growth_plot.png")
+    plt.savefig("logistic_growth_plot.png", dpi=300, bbox_inches="tight")
     plt.show()
 
 
