@@ -83,6 +83,7 @@ Fourth-order Runge-Kutta method
 SciPy solver comparison
 Additional differential equation models such as SIR, predator-prey, and damped harmonic motion
 Interactive visualization using Streamlit
-What I Learned
+
+## What I Learned
 
 This project helped me practice translating a differential equation into Python code, implementing a numerical approximation method, and comparing computational results to an exact mathematical solution.
